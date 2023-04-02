@@ -1,0 +1,65 @@
+openapi: 3.0.0
+info:
+  title: Go JSON Web Service
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080
+paths:
+  /doc/{docId}:
+    post:
+      summary: Accept an update to an existing document. If succesful will return information about the document, and appropriate error information if not. 
+      requestBody:
+        description: JSON document to be processed
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: JSON document was accepted, metadata about the new version is returned
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: JSON document was rejected due to it being not of the correct structure of the document. The returned JSON will contain additional information.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: You are not allowed to write to this document
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          description: JSON document was rejected due to it being not of the correct structure of the document. The returned JSON will contain additional information.
+          content:
+            application/json:
+              schema:
+                type: object
+  /doc/{docId}:
+    post:
+      summary: Accepts a JSON document and returns it in the response
+      requestBody:
+        description: JSON document to be processed
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: JSON document was accepted
+          content:
+            application/json:
+              schema:
+                type: object
+  /health:
+    get:
+      summary: Returns the health status of the server
+      responses:
+        '200':
+          description: OK
